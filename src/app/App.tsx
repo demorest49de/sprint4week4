@@ -13,6 +13,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {Login} from "../features/Login/Login";
+import {Outlet} from "react-router-dom";
 
 
 function App() {
@@ -33,8 +34,9 @@ function App() {
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
-                <TodolistsList/>
-                <Login/>
+                <Outlet/>
+                {/*<TodolistsList/>*/}
+                {/*<Login/>*/}
             </Container>
         </div>
     )

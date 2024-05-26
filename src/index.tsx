@@ -6,8 +6,8 @@ import App from './app/App';
 import {Provider} from 'react-redux';
 import {store} from './app/store';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import {Login} from "@mui/icons-material";
 import {TodolistsList} from "./features/TodolistsList/TodolistsList";
+import { Login } from './features/Login/Login';
 
 const router = createBrowserRouter([
     {
