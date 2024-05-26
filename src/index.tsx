@@ -5,6 +5,26 @@ import reportWebVitals from './reportWebVitals';
 import App from './app/App';
 import {Provider} from 'react-redux';
 import {store} from './app/store';
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {Login} from "@mui/icons-material";
+import {TodolistsList} from "./features/TodolistsList/TodolistsList";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App/>,
+        children: [
+            {
+                path: "/login",
+                element: <Login/>,
+            },
+            {
+                path: '/todolists',
+                element: <TodolistsList/>,
+            }
+        ]
+    }
+])
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -12,7 +32,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
     <Provider store={store}>
-        <App/>
+        <RouterProvider router={router}/>
     </Provider>
 );
 
