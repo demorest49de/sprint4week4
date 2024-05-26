@@ -5,15 +5,19 @@ import reportWebVitals from './reportWebVitals';
 import App from './app/App';
 import {Provider} from 'react-redux';
 import {store} from './app/store';
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {TodolistsList} from "./features/TodolistsList/TodolistsList";
-import { Login } from './features/Login/Login';
+import {Login} from './features/Login/Login';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
         children: [
+            {
+                index: true,
+                element: <Navigate to="/todolists"/>
+            },
             {
                 path: "/login",
                 element: <Login/>,
