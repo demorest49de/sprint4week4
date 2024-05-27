@@ -8,7 +8,7 @@ type ErrorType = {
     email?: string
     password?: string
 }
-// https://youtu.be/vmTgFlgGVag?t=6678
+// https://youtu.be/vmTgFlgGVag?t=8686
 
 export const Login = () => {
     const formik = useFormik({
@@ -63,23 +63,18 @@ export const Login = () => {
                         <FormGroup>
                             <TextField
                                 label="Email"
-                                name="email"
                                 margin="normal"
-                                onBlur={formik.handleBlur}
-                                onChange={formik.handleChange}
-                                value={formik.values.email}
                                 error={!!(formik.touched.email && formik.errors.email )}
+                                {...formik.getFieldProps('email')}
                             />
                             {formik.touched.email && formik.errors.email && <div style={{color: 'crimson '}}
                                                                                  className="alert alert-danger">{formik.errors.email}</div>}
                             <TextField
                                 type="password"
                                 label="Password"
-                                name="password"
                                 margin="normal"
-                                onChange={formik.handleChange}
-                                value={formik.values.password}
                                 error={!!(formik.touched.password && formik.errors.password)}
+                                {...formik.getFieldProps('password')}
                             />
                             {formik.touched.password && formik.errors.password && <div style={{color: 'crimson '}}
                                                                                       className="alert alert-danger">{formik.errors.password}</div>}
