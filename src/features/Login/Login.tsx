@@ -40,10 +40,11 @@ export const Login = () => {
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
+            formik.resetForm()
         },
     });
 
-    console.log(' formik.touched:  ', formik.touched);
+
     return (
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
@@ -64,7 +65,7 @@ export const Login = () => {
                             <TextField
                                 label="Email"
                                 margin="normal"
-                                error={!!(formik.touched.email && formik.errors.email )}
+                                error={!!(formik.touched.email && formik.errors.email)}
                                 {...formik.getFieldProps('email')}
                             />
                             {formik.touched.email && formik.errors.email && <div style={{color: 'crimson '}}
@@ -77,11 +78,10 @@ export const Login = () => {
                                 {...formik.getFieldProps('password')}
                             />
                             {formik.touched.password && formik.errors.password && <div style={{color: 'crimson '}}
-                                                                                      className="alert alert-danger">{formik.errors.password}</div>}
+                                                                                       className="alert alert-danger">{formik.errors.password}</div>}
                             <FormControlLabel label={'Remember me'} control={<Checkbox
-                                name="rememberMe"
-                                checked={formik.values.rememberMe}
-                                onChange={formik.handleChange}
+                               checked={formik.values.rememberMe}
+                                {...formik.getFieldProps('rememberMe')}
                             />}/>
                             <Button type={'submit'} variant={'contained'} color={'primary'}>
                                 Login
