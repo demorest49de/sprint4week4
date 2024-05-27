@@ -8,12 +8,14 @@ export const Login = () => {
     const formik = useFormik({
         initialValues: {
             email: '',
+            password:'',
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
         },
     });
-    console.log(' formik: ', formik);
+
+    console.log(' formik: ', formik.values);
     return (
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
@@ -33,10 +35,19 @@ export const Login = () => {
                         <FormGroup>
                             <TextField
                                 label="Email"
+                                name="email"
                                 margin="normal"
                                 onChange={formik.handleChange}
+                                value={formik.values.email}
                             />
-                            <TextField type="password" label="Password" margin="normal"/>
+                            <TextField
+                                type="password"
+                                label="Password"
+                                name="password"
+                                margin="normal"
+                                onChange={formik.handleChange}
+                                value={formik.values.password}
+                            />
                             <FormControlLabel label={'Remember me'} control={<Checkbox/>}/>
                             <Button type={'submit'} variant={'contained'} color={'primary'}>
                                 Login
