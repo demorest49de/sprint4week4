@@ -8,11 +8,13 @@ import {store} from './app/store';
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import {TodolistsList} from "./features/TodolistsList/TodolistsList";
 import {Login} from './features/Login/Login';
+import {ErrorPage} from "./components/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App/>,
+        errorElement:<Navigate to="/404"/>,
         children: [
             {
                 index: true,
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
                 element: <TodolistsList/>,
             }
         ]
+    },
+    {
+        path: '/404',
+        element: <ErrorPage />
     }
 ])
 
