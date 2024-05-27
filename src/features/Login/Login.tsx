@@ -4,18 +4,44 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import {useFormik} from "formik";
 
+type ErrorType = {
+    email?: string
+    password?: string
+}
+// https://youtu.be/vmTgFlgGVag?t=6678
+
 export const Login = () => {
     const formik = useFormik({
         initialValues: {
             email: '',
-            password:'',
+            password: '',
+            rememberMe: false,
+        },
+        validate: (values) => {
+            const errors: ErrorType = {}
+            const emailIsNotValid = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email);
+            const passwordIsNotValid = !/^(?=.*[A-Z]+)(?=.*[!@#$^&*()_\-=+]{2,})(?=.*[0-9]+)(?=.*[a-z]+).{8,}$/gm.test(values.password);
+            console.log(' passwordIsNotValid: ', passwordIsNotValid);
+            if (!values.email.length) {
+                errors.email = 'Required';
+            } else if (emailIsNotValid) {
+                errors.email = 'Invalid email address';
+            }
+
+            if(!values.password){
+                errors.password = 'Required';
+            }else if(passwordIsNotValid){
+                errors.password = 'Incorrect password';
+            }
+
+            return errors
         },
         onSubmit: values => {
             alert(JSON.stringify(values, null, 2));
         },
     });
 
-    console.log(' formik: ', formik.values);
+    console.log(' formik: ', formik.errors);
     return (
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
@@ -48,14 +74,18 @@ export const Login = () => {
                                 onChange={formik.handleChange}
                                 value={formik.values.password}
                             />
-                            <FormControlLabel label={'Remember me'} control={<Checkbox/>}/>
+                            <FormControlLabel label={'Remember me'} control={<Checkbox
+                                name="rememberMe"
+                                checked={formik.values.rememberMe}
+                                onChange={formik.handleChange}
+                            />}/>
                             <Button type={'submit'} variant={'contained'} color={'primary'}>
                                 Login
                             </Button>
                         </FormGroup>
-                        </form>
+                    </form>
                 </FormControl>
             </Grid>
         </Grid>
-)
+    )
 }
