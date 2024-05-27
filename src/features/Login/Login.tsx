@@ -20,17 +20,19 @@ export const Login = () => {
         validate: (values) => {
             const errors: ErrorType = {}
             const emailIsNotValid = !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email);
-            const passwordIsNotValid = !/^(?=.*[A-Z]+)(?=.*[!@#$^&*()_\-=+]{2,})(?=.*[0-9]+)(?=.*[a-z]+).{8,}$/gm.test(values.password);
+            const passwordIsNotValid = !/^(?=.*[A-Z]+)(?=.*[!@#$^&*()_\-=+]{2,})(?=.*[0-9]+)(?=.*[a-z]+).{8,}$/g.test(values.password);
             console.log(' passwordIsNotValid: ', passwordIsNotValid);
+            console.log(' formik.values.password: ', values.password);
+
             if (!values.email.length) {
                 errors.email = 'Required';
             } else if (emailIsNotValid) {
                 errors.email = 'Invalid email address';
             }
 
-            if(!values.password){
+            if (!values.password) {
                 errors.password = 'Required';
-            }else if(passwordIsNotValid){
+            } else if (passwordIsNotValid) {
                 errors.password = 'Incorrect password';
             }
 
@@ -41,7 +43,7 @@ export const Login = () => {
         },
     });
 
-    console.log(' formik: ', formik.errors);
+    console.log(' formik.touched:  ', formik.touched);
     return (
         <Grid container justifyContent={'center'}>
             <Grid item justifyContent={'center'}>
@@ -63,9 +65,13 @@ export const Login = () => {
                                 label="Email"
                                 name="email"
                                 margin="normal"
+                                onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                                 value={formik.values.email}
+                                error={!!(formik.touched.email && formik.errors.email )}
                             />
+                            {formik.touched.email && formik.errors.email && <div style={{color: 'crimson '}}
+                                                                                 className="alert alert-danger">{formik.errors.email}</div>}
                             <TextField
                                 type="password"
                                 label="Password"
@@ -73,7 +79,10 @@ export const Login = () => {
                                 margin="normal"
                                 onChange={formik.handleChange}
                                 value={formik.values.password}
+                                error={!!(formik.touched.password && formik.errors.password)}
                             />
+                            {formik.touched.password && formik.errors.password && <div style={{color: 'crimson '}}
+                                                                                      className="alert alert-danger">{formik.errors.password}</div>}
                             <FormControlLabel label={'Remember me'} control={<Checkbox
                                 name="rememberMe"
                                 checked={formik.values.rememberMe}
