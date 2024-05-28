@@ -131,9 +131,11 @@ export type UpdateDomainTaskModelType = {
     startDate?: string
     deadline?: string
 }
+
 export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
+
 type ActionsType =
     | ReturnType<typeof removeTaskAC>
     | ReturnType<typeof addTaskAC>
