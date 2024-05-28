@@ -1,6 +1,12 @@
 import {todolistsAPI, TodolistType} from '../../api/todolists-api'
 import {Dispatch} from 'redux'
-import {RequestStatusType, setAppErrorAC, setAppStatusAC, SetAppStatusActionType} from '../../app/app-reducer'
+import {
+    RequestStatusType,
+    setAppErrorAC,
+    SetAppErrorActionType,
+    setAppStatusAC,
+    SetAppStatusActionType
+} from '../../app/app-reducer'
 
 const initialState: Array<TodolistDomainType> = []
 
@@ -44,7 +50,7 @@ export const setTodolistsAC = (todolists: Array<TodolistType>) => ({type: 'SET-T
 
 // thunks
 export const fetchTodolistsTC = () => {
-    return (dispatch: ThunkDispatch) => {
+    return (dispatch: CustomThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         todolistsAPI.getTodolists()
             .then((res) => {
@@ -54,13 +60,13 @@ export const fetchTodolistsTC = () => {
             .catch((e) => {
                 dispatch(setAppStatusAC('failed'))
                 const resobj = JSON.parse(e.response.request.responseText)
-                // dispatch(setAppErrorAC(resobj.message));
+                dispatch(setAppErrorAC(resobj.message));
                 console.log(' e: ', e, resobj);
             })
     }
 }
 export const removeTodolistTC = (todolistId: string) => {
-    return (dispatch: ThunkDispatch) => {
+    return (dispatch: CustomThunkDispatch) => {
         //изменим глобальный статус приложения, чтобы вверху полоса побежала
         dispatch(setAppStatusAC('loading'))
         //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
@@ -74,7 +80,7 @@ export const removeTodolistTC = (todolistId: string) => {
     }
 }
 export const addTodolistTC = (title: string) => {
-    return (dispatch: ThunkDispatch) => {
+    return (dispatch: CustomThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         todolistsAPI.createTodolist(title)
             .then((res) => {
@@ -108,4 +114,6 @@ export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
     entityStatus: RequestStatusType
 }
-type ThunkDispatch = Dispatch<ActionsType | SetAppStatusActionType>
+
+type CustomThunkDispatch =
+    Dispatch<ActionsType | SetAppStatusActionType | SetAppErrorActionType>
