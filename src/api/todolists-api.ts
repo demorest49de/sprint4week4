@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
+import {LoginType} from "../features/Login/Login";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
@@ -11,7 +12,9 @@ const instance = axios.create({
 // api
 
 export const authAPI = {
-    login: (data: any) =>{},
+    login: (data: LoginType) =>{
+        return instance.post<ResponseType<{ userId: number }>>('auth/login', data)
+    },
     logout: (data: any) =>{},
     me: (data: any) =>{}
 }

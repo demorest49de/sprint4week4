@@ -3,14 +3,27 @@ import {Button, FormControl, FormControlLabel, FormGroup, FormLabel} from "@mui/
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import {useFormik} from "formik";
+import {loginTC} from "./auth-reducer";
+import {useAppDispatch, useAppSelector} from "../../app/store";
+import { Navigate } from "react-router-dom";
 
 type ErrorType = {
     email?: string
     password?: string
 }
+
+export type LoginType = {
+    email: string
+    password: string
+    rememberMe?: boolean,
+    captcha?: boolean
+}
+
 //
 
 export const Login = () => {
+    const dispatch = useAppDispatch();
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -30,20 +43,24 @@ export const Login = () => {
                 errors.email = 'Invalid email address';
             }
 
-            if (!values.password) {
-                errors.password = 'Required';
-            } else if (passwordIsNotValid) {
-                errors.password = 'Incorrect password';
+            if (values.password.length < 4) {
+                errors.password = 'Required min 4 characters long';
             }
+            // else if (passwordIsNotValid) {
+            //     errors.password = 'Incorrect password';
+            // }
 
             return errors
         },
         onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+            dispatch(loginTC(values))
             formik.resetForm()
         },
     });
 
+    if (isLoggedIn) {
+        return <Navigate to="/todolists"/>
+    }
 
     return (
         <Grid container justifyContent={'center'}>
@@ -80,7 +97,7 @@ export const Login = () => {
                             {formik.touched.password && formik.errors.password && <div style={{color: 'crimson '}}
                                                                                        className="alert alert-danger">{formik.errors.password}</div>}
                             <FormControlLabel label={'Remember me'} control={<Checkbox
-                               checked={formik.values.rememberMe}
+                                checked={formik.values.rememberMe}
                                 {...formik.getFieldProps('rememberMe')}
                             />}/>
                             <Button type={'submit'} variant={'contained'} color={'primary'}>
