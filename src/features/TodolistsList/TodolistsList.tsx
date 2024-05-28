@@ -77,21 +77,23 @@ export const TodolistsList: React.FC = () => {
                 todolists.map(tl => {
                     let allTodolistTasks = tasks[tl.id]
 
-                    return <Grid item key={tl.id}>
-                        <Paper style={{padding: '10px'}}>
-                            <Todolist
-                                todolist={tl}
-                                tasks={allTodolistTasks}
-                                removeTask={removeTask}
-                                changeFilter={changeFilter}
-                                addTask={addTask}
-                                changeTaskStatus={changeStatus}
-                                removeTodolist={removeTodolist}
-                                changeTaskTitle={changeTaskTitle}
-                                changeTodolistTitle={changeTodolistTitle}
-                            />
-                        </Paper>
-                    </Grid>
+                    return <>
+                        <Grid item key={tl.id}>
+                            <Paper style={{padding: '10px'}}>
+                                <Todolist
+                                    todolist={tl}
+                                    tasks={allTodolistTasks}
+                                    removeTask={removeTask}
+                                    changeFilter={changeFilter}
+                                    addTask={addTask}
+                                    changeTaskStatus={changeStatus}
+                                    removeTodolist={removeTodolist}
+                                    changeTaskTitle={changeTaskTitle}
+                                    changeTodolistTitle={changeTodolistTitle}
+                                />
+                            </Paper>
+                        </Grid>
+                    </>
                 })
             }
         </Grid>
