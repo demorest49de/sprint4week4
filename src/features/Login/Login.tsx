@@ -5,7 +5,8 @@ import Checkbox from "@mui/material/Checkbox";
 import {useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/store";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
+import {useEffect} from "react";
 
 type ErrorType = {
     email?: string
