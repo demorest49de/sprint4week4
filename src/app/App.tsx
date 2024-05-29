@@ -27,7 +27,6 @@ function App() {
     }
 
     useEffect(() => {
-        console.log('1 - app.tsx');
         dispatch(meTC())
     }, []);
 

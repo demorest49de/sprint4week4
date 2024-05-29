@@ -71,11 +71,14 @@ export const TodolistsList: React.FC = () => {
         dispatch(thunk)
     }, [dispatch])
 
-    console.log('todolists list');
+    console.log('before if todolists list');
 
     if (!isLoggedIn) {
+        console.log('if () <Navigate to="/login"/>');
         return <Navigate to="/login"/>
     }
+
+    console.log('after if  todolists list');
 
     return <>
         <Grid container style={{padding: '20px'}}>
