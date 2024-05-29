@@ -12,7 +12,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import {Menu} from '@mui/icons-material';
 import {ErrorSnackbar} from '../components/ErrorSnackbar/ErrorSnackbar'
 import {Outlet} from "react-router-dom";
-import {meTC} from "../features/Login/auth-reducer";
+import {logOutTC, meTC} from "../features/Login/auth-reducer";
 import {CircularProgress} from "@mui/material";
 
 
@@ -20,6 +20,11 @@ function App() {
     const dispatch = useAppDispatch()
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
     const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+    const logOut =()=>{
+        dispatch(logOutTC())
+    }
 
     useEffect(() => {
         console.log('1 - app.tsx');
@@ -45,7 +50,7 @@ function App() {
                     <Typography variant="h6">
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    {isLoggedIn && <Button onClick={logOut} color="inherit">Log out</Button>}
                 </Toolbar>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>

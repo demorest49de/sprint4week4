@@ -47,7 +47,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch<ActionsType>) =>
             console.log(e.message)
         })
 }
-// https://youtu.be/vmTgFlgGVag?t=16376
+
 export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.me()
@@ -65,6 +65,23 @@ export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
         })
         .finally(() => {
             dispatch(setInitializedAC(true))
+        })
+}
+
+export const logOutTC = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.logout()
+        .then((res) => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(false))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res.data, dispatch)
+            }
+        })
+        .catch(e => {
+            handleServerNetworkError(e.message, dispatch)
+            console.log(e.message)
         })
 }
 
