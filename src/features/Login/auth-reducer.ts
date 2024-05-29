@@ -2,7 +2,7 @@ import {Dispatch} from 'redux'
 import {
     SetAppErrorActionType,
     setAppStatusAC,
-    SetAppStatusActionType
+    SetAppStatusActionType, setInitializedAC, setInitializedActionType
 }
     from "../../app/app-reducer";
 import {authAPI} from "../../api/todolists-api";
@@ -35,11 +35,11 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch<ActionsType>) =>
     dispatch(setAppStatusAC('loading'))
     authAPI.login(data)
         .then((res) => {
-            if(res.data.resultCode === 0){
+            if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'))
-            }else {
-                handleServerAppError(res.data,dispatch)
+            } else {
+                handleServerAppError(res.data, dispatch)
             }
         })
         .catch(e => {
@@ -47,21 +47,24 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch<ActionsType>) =>
             console.log(e.message)
         })
 }
-
+// https://youtu.be/vmTgFlgGVag?t=16376
 export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
     authAPI.me()
         .then((res) => {
-            if(res.data.resultCode === 0){
+            if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'))
-            }else {
-                handleServerAppError(res.data,dispatch)
+            } else {
+                handleServerAppError(res.data, dispatch)
             }
         })
         .catch(e => {
             handleServerNetworkError(e.message, dispatch)
             console.log(e.message)
+        })
+        .finally(() => {
+            dispatch(setInitializedAC(true))
         })
 }
 
@@ -70,3 +73,4 @@ type ActionsType =
     | ReturnType<typeof setIsLoggedInAC>
     | SetAppStatusActionType
     | SetAppErrorActionType
+    | setInitializedActionType

@@ -6,7 +6,6 @@ import {useFormik} from "formik";
 import {loginTC} from "./auth-reducer";
 import {useAppDispatch, useAppSelector} from "../../app/store";
 import {Navigate} from "react-router-dom";
-import {useEffect} from "react";
 
 type ErrorType = {
     email?: string
@@ -58,6 +57,8 @@ export const Login = () => {
             formik.resetForm()
         },
     });
+
+    console.log('login');
 
     if (isLoggedIn) {
         return <Navigate to="/todolists"/>

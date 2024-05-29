@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         element: <ErrorPage />
     }
 ])
-
+console.log('index');
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );

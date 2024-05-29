@@ -71,6 +71,8 @@ export const TodolistsList: React.FC = () => {
         dispatch(thunk)
     }, [dispatch])
 
+    console.log('todolists list');
+
     if (!isLoggedIn) {
         return <Navigate to="/login"/>
     }
