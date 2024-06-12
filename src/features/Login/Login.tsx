@@ -46,9 +46,6 @@ export const Login = () => {
             if (values.password.length < 4) {
                 errors.password = 'Required min 4 characters long';
             }
-            // else if (passwordIsNotValid) {
-            //     errors.password = 'Incorrect password';
-            // }
 
             return errors
         },
@@ -98,6 +95,7 @@ export const Login = () => {
                             />
                             {formik.touched.password && formik.errors.password && <div style={{color: 'crimson '}}
                                                                                        className="alert alert-danger">{formik.errors.password}</div>}
+
                             <FormControlLabel label={'Remember me'} control={<Checkbox
                                 checked={formik.values.rememberMe}
                                 {...formik.getFieldProps('rememberMe')}
